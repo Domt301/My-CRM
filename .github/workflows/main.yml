@@ -21,12 +21,10 @@ jobs:
       uses: NuGet/setup-nuget@v1.0.5
 
     - name: Restore NuGet packages
-      run: |
-        nuget restore *.sln
+      run: nuget restore MyCRM.sln
 
     - name: Build
-      run: |
-        msbuild *.sln /p:Configuration=Debug
+      run: msbuild MyCRM.sln /p:Configuration=Debug
 
     #- name: Copy Plugin Packages
     #  run: |
