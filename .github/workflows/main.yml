@@ -1,18 +1,18 @@
-name: Build ASP.NET 4.7.1 solution
+name: CI
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches:
+      - master
 
 jobs:
   build:
-    
+
     runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
+  
 
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1.0.2
@@ -21,32 +21,45 @@ jobs:
       uses: NuGet/setup-nuget@v1.0.5
 
     - name: Restore NuGet packages
-      run: nuget restore MyCRM.sln
+      run: |
+        nuget restore **/*.sln
 
-    - name: Build solution
-      run: msbuild MyCRM.sln /p:Configuration=Debug 
+    - name: Build
+      run: |
+        msbuild **\*.sln /p:Configuration=Debug
 
-    - name: Read Contents
-      run: dir
+    #- name: Copy Plugin Packages
+    #  run: |
+    #    New-Item -ItemType Directory -Force -Path $(Build.ArtifactStagingDirectory)/Plugins
+    #    Copy-Item -Path Src/Backend/**/bin/** -Destination $(Build.ArtifactStagingDirectory)/Plugins -Recurse
 
-    - name: Authenticate with source environment
-      uses: microsoft/powerplatform-actions/who-am-i@v0
-      with:
-        environment-url: ${{ secrets.CRM_URL }}
-        app-id: ${{ secrets.CRM_APP_ID }}
-        client-secret: ${{ secrets.CRM_CLIENT_SECRET }}
-        tenant-id: ${{ secrets.CRM_TENANT_ID }}
+    #- name: Publish Dataverse Plugins artifact
+    #  uses: actions/upload-artifact@v2
+    #  with:
+    #    name: DataversePlugins
+    #    path: $(Build.ArtifactStagingDirectory)
 
-    - name: Push to CRM
-      uses: microsoft/powerplatform-actions/deploy-package@v0
-      with:
-        environment-url: ${{ secrets.CRM_URL }}
-        app-id: ${{ secrets.CRM_APP_ID }}
-        client-secret: ${{ secrets.CRM_CLIENT_SECRET }}
-        tenant-id: ${{ secrets.CRM_TENANT_ID }}
-        package: ./MyPlugins/bin/Debug/MyPlugins.dll
+    - name: Install PAC
+      run: |
+        nuget install Microsoft.PowerApps.CLI -OutputDirectory pac
+
+    - name: Set PAC path
+      run: |
+        $pacNugetFolder = Get-ChildItem "pac" | Where-Object {$_.Name -match "Microsoft.PowerApps.CLI."}
+        $pacPath = $pacNugetFolder.FullName + "\tools"
+        echo "pacPath=$pacPath" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+    - name: Create Auth
+      run: |
+        $env:PATH = $env:PATH + ";" + "${{ env.pacPath }}"
+        $clientSecret = "${{ secrets.CRM_CLIENT_SECRE }}"
+        $tenantId = "${{ secrets.CRM_TENANT_ID }}"
+        $applicationId = "${{ secrets.CRM_APP_ID }}"
+        $orgUrl = "${{ secrets.CRM_URL }}"
+        pac auth create --url $orgUrl --name MyOrg-SPN --applicationId $applicationId --clientSecret $clientSecret --tenant $tenantId
 
 
-        
-
-   
+    - name: Push Plugin Package
+      run: |
+        $env:PATH = $env:PATH + ";" + "${{ env.pacPath }}"
+        pac plugin push -id 9855e121-96b9-444a-bf00-1f8a57a015c3 -pf ./MyPlugins/bin/Debug/MyPlugins.dll
