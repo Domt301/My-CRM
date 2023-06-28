@@ -20,11 +20,17 @@ jobs:
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1.0.5
 
+    - name: Setup VSTest
+      uses: darenm/Setup-VSTest@v1
+
     - name: Restore NuGet packages
       run: nuget restore MyCRM.sln
 
     - name: Build
       run: msbuild MyCRM.sln /p:Configuration=Debug
+
+    - name: Run Tests
+      run: vstest.console.exe MyCRM.Tests\bin\Debug\MyCRM.Tests.dll
 
     - name: Install PAC
       run: |
