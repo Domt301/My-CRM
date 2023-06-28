@@ -15,6 +15,7 @@ namespace MyPlugins
             // Extract the tracing service for use in debugging sandboxed plug-ins.  
             // If you are not registering the plug-in in the sandbox, then you do  
             // not have to add any tracing service related code.  
+            //minorchange
             ITracingService tracingService =
                 (ITracingService)serviceProvider.GetService(typeof(ITracingService));
 
