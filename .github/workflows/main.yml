@@ -44,7 +44,7 @@ jobs:
         app-id: ${{ secrets.CRM_APP_ID }}
         client-secret: ${{ secrets.CRM_CLIENT_SECRET }}
         tenant-id: ${{ secrets.CRM_TENANT_ID }}
-        package: .MyPlugins/bin/Debug/MyPlugins.dll
+        package: ./MyPlugins/bin/Debug/MyPlugins.dll
 
 
         
