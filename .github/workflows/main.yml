@@ -30,7 +30,7 @@ jobs:
       run: msbuild MyCRM.sln /p:Configuration=Debug
 
     - name: Run Tests
-      run: vstest.console.exe ./MyPluginsTests/bin/Debug/MyPlugins.Tests.dll
+      run: vstest.console.exe MyPluginsTests\bin\Debug\MyPlugins.Tests.dll
 
     - name: Install PAC
       run: |
