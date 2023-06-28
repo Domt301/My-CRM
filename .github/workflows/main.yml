@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-
+    
     runs-on: windows-latest
 
     steps:
@@ -28,3 +28,24 @@ jobs:
 
     - name: Read Contents
       run: dir
+    - name: Authenticate with source environment
+      uses: microsoft/powerplatform-actions/who-am-i@v0
+      with:
+        environment-url: ${{ secrets.CRM_URL }}
+        app-id: ${{ secrets.CRM_APP_ID }}
+        client-secret: ${{ secrets.CRM_CLIENT_SECRET }}
+        tenant-id: ${{ secrets.CRM_TENANT_ID }}
+
+    - name: Push to CRM
+      uses: microsoft/powerplatform-actions/deploy-package@v0
+      with:
+        environment-url: ${{ secrets.CRM_URL }}
+        app-id: ${{ secrets.CRM_APP_ID }}
+        client-secret: ${{ secrets.CRM_CLIENT_SECRET }}
+        tenant-id: ${{ secrets.CRM_TENANT_ID }}
+        package: ./MyPlugins/bin/Debug/MyPlugins.dll
+
+
+        
+
+   

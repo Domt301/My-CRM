@@ -43,7 +43,7 @@ namespace MyPlugins
                   var contactFirstName = entity.Attributes["firstname"].ToString();
                   var contactLastName = entity.Attributes["lastname"].ToString();
 
-                  entity.Attributes.Add("description", "Hello World " + contactFirstName + " " + contactLastName + "!");
+                  entity.Attributes.Add("description", "Hello World " + contactFirstName + " " + contactLastName + "we updated!");
 
                     // Plug-in business logic goes here.  
 
