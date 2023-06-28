@@ -1,4 +1,4 @@
-# D365 Single Plugin Repository
+# D365 Single Plugin Repository [![CI](https://github.com/Domt301/My-CRM/actions/workflows/main.yml/badge.svg)](https://github.com/Domt301/My-CRM/actions/workflows/main.yml)
 
 This repository contains a D365 plugin, alongside an integrated GitHub Actions pipeline, which manages the build, release, and testing processes. This repository ensures the efficient and consistent delivery of the plugin, with a high emphasis on quality and reliability.
 
