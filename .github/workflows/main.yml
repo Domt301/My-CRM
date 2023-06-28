@@ -26,17 +26,6 @@ jobs:
     - name: Build
       run: msbuild MyCRM.sln /p:Configuration=Debug
 
-    #- name: Copy Plugin Packages
-    #  run: |
-    #    New-Item -ItemType Directory -Force -Path $(Build.ArtifactStagingDirectory)/Plugins
-    #    Copy-Item -Path Src/Backend/**/bin/** -Destination $(Build.ArtifactStagingDirectory)/Plugins -Recurse
-
-    #- name: Publish Dataverse Plugins artifact
-    #  uses: actions/upload-artifact@v2
-    #  with:
-    #    name: DataversePlugins
-    #    path: $(Build.ArtifactStagingDirectory)
-
     - name: Install PAC
       run: |
         nuget install Microsoft.PowerApps.CLI -OutputDirectory pac
