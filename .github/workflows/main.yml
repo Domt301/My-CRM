@@ -24,8 +24,12 @@ jobs:
       run: nuget restore MyCRM.sln
 
     - name: Build solution
-      run: msbuild MyCRM.sln /p:Configuration=Debug /p:OutDir=./
+      run: msbuild MyCRM.sln /p:Configuration=Debug 
 
+    - name: Read Contents
+      run: dir
+    - name: Change Directory
+      run: cd MyPlugins/bin/Debug
     - name: Read Contents
       run: dir
     - name: Authenticate with source environment
@@ -43,7 +47,7 @@ jobs:
         app-id: ${{ secrets.CRM_APP_ID }}
         client-secret: ${{ secrets.CRM_CLIENT_SECRET }}
         tenant-id: ${{ secrets.CRM_TENANT_ID }}
-        package: ./MyPlugins/bin/Debug/MyPlugins.dll
+        package: ./MyPlugins.dll
 
 
         
