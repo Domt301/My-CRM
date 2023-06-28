@@ -60,4 +60,4 @@ jobs:
     - name: Push Plugin Package
       run: |
         $env:PATH = $env:PATH + ";" + "${{ env.pacPath }}"
-        pac plugin push -pluginId 9855e121-96b9-444a-bf00-1f8a57a015c3 -pf ./MyPlugins/bin/Debug/MyPlugins.dll -t Assembly
+        pac plugin push --pluginId 9855e121-96b9-444a-bf00-1f8a57a015c3 --pluginFile ./MyPlugins/bin/Debug/MyPlugins.dll --type Assembly
