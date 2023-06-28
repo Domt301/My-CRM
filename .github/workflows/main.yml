@@ -28,10 +28,7 @@ jobs:
 
     - name: Read Contents
       run: dir
-    - name: Change Directory
-      run: cd MyPlugins/bin/Debug
-    - name: Read Contents
-      run: dir
+
     - name: Authenticate with source environment
       uses: microsoft/powerplatform-actions/who-am-i@v0
       with:
@@ -47,7 +44,7 @@ jobs:
         app-id: ${{ secrets.CRM_APP_ID }}
         client-secret: ${{ secrets.CRM_CLIENT_SECRET }}
         tenant-id: ${{ secrets.CRM_TENANT_ID }}
-        package: ./MyPlugins.dll
+        package: .MyPlugins/bin/Debug/MyPlugins.dll
 
 
         
