@@ -24,4 +24,4 @@ jobs:
       run: nuget restore MyCRM.sln
 
     - name: Build solution
-      run: msbuild MyCRM.sln /p:Configuration=Release
+      run: msbuild MyCRM.sln /p:Configuration=Debug
