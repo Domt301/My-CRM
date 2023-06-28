@@ -50,7 +50,7 @@ jobs:
     - name: Create Auth
       run: |
         $env:PATH = $env:PATH + ";" + "${{ env.pacPath }}"
-        $clientSecret = "${{ secrets.CRM_CLIENT_SECRE }}"
+        $clientSecret = "${{ secrets.CRM_CLIENT_SECRET }}"
         $tenantId = "${{ secrets.CRM_TENANT_ID }}"
         $applicationId = "${{ secrets.CRM_APP_ID }}"
         $orgUrl = "${{ secrets.CRM_URL }}"
